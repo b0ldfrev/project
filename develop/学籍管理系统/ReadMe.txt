@@ -1,5 +1,5 @@
   基于python2.7 tkinter re库
-  mysql 5.0
+  mySQL 5.0
   大二下学期末的数据库课程设计
 
 功能要求：
