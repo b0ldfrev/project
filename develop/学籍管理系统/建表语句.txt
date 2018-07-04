@@ -1,0 +1,99 @@
+建立院系表：院系号，院系名，院长名字
+
+CREATE TABLE academy (
+ aca_id char(20) NOT NULL,
+ acaname char(20) NOT NULL,
+ aca_mana char(20) default NULL,
+ PRIMARY KEY (aca_id)
+);
+
+建立课程表：课程号，课程名，学分，开课时间
+
+CREATE TABLE course (
+ cno char(10) NOT NULL,
+ cname char(40) NOT NULL,
+ ccredit smallint(6) default NULL,
+ c_time char(20) default NULL,
+ PRIMARY KEY (cno)
+) ;
+
+建立专业表：专业号，院系号，专业名
+
+CREATE TABLE major (
+  mno char(10) NOT NULL,
+  aca_id char(20) default NULL,
+  mname char(40) NOT NULL,
+  PRIMARY KEY  (mno),
+ FOREIGN KEY (aca_id) REFERENCES academy (aca_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+建立学生表：学号，名字，性别，民族，年龄，政治面貌，地区，院系号，专业号，入学时间，电话号码，登陆密码。
+
+CREATE TABLE student (
+  sno char(20) NOT NULL,
+  sname char(20) NOT NULL,
+  ssex char(10) default NULL,
+  sxz char(5) default NULL,
+  snation char(10) NOT NULL,
+  ssage smallint(11) default NULL,
+  szzmm char(10) default NULL,
+  sarea char(20) default NULL,
+  aca_id char(20) default NULL,
+  mno char(10) default NULL,
+  mtime year(4) default NULL,
+  mphone char(20) default NULL,
+  password char(20) NOT NULL,
+ PRIMARY KEY (sno),
+ FOREIGN KEY (aca_id) REFERENCES academy (aca_id) ON DELETE CASCADE ON UPDATE CASCADE,
+ FOREIGN KEY (mno) REFERENCES major (mno) ON DELETE CASCADE ON UPDATE CASCADE
+) ;
+
+
+建立选课表：学号，课程号，分数
+
+CREATE TABLE `elective` (
+  `sno` char(20) NOT NULL default '',
+  `cno` char(10) NOT NULL default '',
+  `grade` int(11) default NULL,
+  PRIMARY KEY  (`sno`,`cno`),
+  KEY `cno` (`cno`),
+  CONSTRAINT `elective_ibfk_1` FOREIGN KEY (`sno`) REFERENCES `student` (`sno`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `elective_ibfk_2` FOREIGN KEY (`cno`) REFERENCES `course` (`cno`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+建立奖罚表：奖罚号，奖罚名
+
+CREATE TABLE sanction (
+  san_id char(20) NOT NULL,
+  san_name char(50) NOT NULL,
+  PRIMARY KEY  (san_id)
+);
+
+建立获得奖罚表：学生号，获得奖罚号。
+
+CREATE TABLE `gain` (
+  `sno` char(20) NOT NULL default '',
+  `san_id` char(20) NOT NULL default '',
+  PRIMARY KEY  (`sno`,`san_id`),
+  KEY `san_id` (`san_id`),
+  CONSTRAINT `gain_ibfk_1` FOREIGN KEY (`sno`) REFERENCES `student` (`sno`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `gain_ibfk_2` FOREIGN KEY (`san_id`) REFERENCES `sanction` (`san_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+建立修复转退表：学生号，修复转退内容
+
+CREATE TABLE xfzt (
+  sno char(20) NOT NULL,
+  xfzt char(40) default NULL,
+  PRIMARY KEY  (sno),
+ FOREIGN KEY (sno) REFERENCES student (sno) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+
+
+
+
+
