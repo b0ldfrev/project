@@ -1,4 +1,4 @@
-  基于python2.7 tkinter re库
+  基于python2.7 tkinter re库 C/S架构
   mySQL 5.0
   大二下学期末的数据库课程设计
 
