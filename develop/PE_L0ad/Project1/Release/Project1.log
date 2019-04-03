@@ -1,0 +1,17 @@
+﻿生成启动时间为 2019/4/3 20:29:43。
+     1>项目“C:\Users\杨鑫顺\Desktop\Project1\Project1\Project1.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         D:\c语言study\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+       Link:
+         D:\c语言study\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\杨鑫顺\Desktop\Project1\Release\PE_Load.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\杨鑫顺\Desktop\Project1\Release\PE_Load.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT:NO /IMPLIB:"C:\Users\杨鑫顺\Desktop\Project1\Release\PE_Load.lib" /MACHINE:X86 /SAFESEH Release\main.obj
+         Release\PE_Load.obj
+         Release\stdafx.obj
+         正在生成代码
+         已完成代码的生成
+         Project1.vcxproj -> C:\Users\杨鑫顺\Desktop\Project1\Release\PE_Load.exe
+     1>已完成生成项目“C:\Users\杨鑫顺\Desktop\Project1\Project1\Project1.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:00.57

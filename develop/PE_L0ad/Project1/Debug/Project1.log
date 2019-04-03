@@ -1,0 +1,19 @@
+﻿生成启动时间为 2019/4/3 15:01:55。
+     1>项目“C:\Users\杨鑫顺\Desktop\Project1\Project1\Project1.vcxproj”在节点 2 上(Build 个目标)。
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(381,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Project1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+     1>ClCompile:
+         D:\c语言study\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp PE_Load.cpp stdafx.cpp
+         正在跳过...(未检测到相关更改)
+         stdafx.cpp
+         PE_Load.cpp
+         main.cpp
+       Link:
+         D:\c语言study\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\杨鑫顺\Desktop\Project1\Debug\PE_Load.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\杨鑫顺\Desktop\Project1\Debug\PE_Load.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\杨鑫顺\Desktop\Project1\Debug\PE_Load.lib" /MACHINE:X86 Debug\main.obj
+         Debug\PE_Load.obj
+         Debug\stdafx.obj
+         Project1.vcxproj -> C:\Users\杨鑫顺\Desktop\Project1\Debug\PE_Load.exe
+     1>已完成生成项目“C:\Users\杨鑫顺\Desktop\Project1\Project1\Project1.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:00.42
