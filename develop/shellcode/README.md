@@ -1,4 +1,4 @@
-移植自我的博客
+移植自[我的博客](https://sirhc.xyz/2017/05/28/Windows%E4%B8%8B%E9%80%9A%E7%94%A8ShellCode%E5%8E%9F%E7%90%86/)
 
 windows全平台通用shellcode
 
