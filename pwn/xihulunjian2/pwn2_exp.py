@@ -2,7 +2,7 @@ from pwn import *
 # author:     "Chris / sirhc.xyz"
 #context(os='linux', arch='amd64',log_level='debug')
 
-p = process('./pwn1')
+p = process('./pwn2')
 
 def g(p):
     gdb.attach(p)
