@@ -1,0 +1,2 @@
+patchelf --set-interpreter /patchelf_lib_ld/2.27/64/ld-2.27.so bin-name
+patchelf --set-rpath /patchelf_lib_ld/2.27/64 bin-name
