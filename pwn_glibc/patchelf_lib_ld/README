@@ -1,2 +1,40 @@
-patchelf --set-interpreter /patchelf_lib_ld/2.27/64/ld-2.27.so bin-name
-patchelf --set-rpath /patchelf_lib_ld/2.27/64 bin-name
+patchelf --set-interpreter patchelf_lib_ld/2.27/64/symbols/ld-2.27.so bin-name
+patchelf --set-rpath patchelf_lib_ld/2.27/64/symbols/ bin-name
+
+
+## 
+set debug-file-directory /usr/lib/debug:patchelf_lib_ld/2.27/debug
+show debug-file-directory
+
+
+############
+
+from pwn_debug import *
+
+## step 1
+pdbg=pwn_debug("p1KkHeap")
+
+#pdbg.context.terminal=['tmux', 'splitw', '-h']
+
+## step 2
+#pdbg.local("libc.so.6")
+pdbg.debug("2.27")
+#pdbg.remote('34.92.96.238',10000)
+## step 3
+#p=pdbg.run("local")
+p=pdbg.run("debug")
+#p=pdbg.run("remote")
+p.recvuntil("Your Choice: ")
+p.sendline("1")
+p.recvuntil("size: ")
+p.sendline(str(50))
+
+pdbg.bp([0xe1e])
+
+elf=pdbg.elf
+print hex(elf.got['printf'])
+print hex(elf.plt['printf'])
+
+libc=pdbg.libc
+print libc.symbols['system']
+p.interactive()
